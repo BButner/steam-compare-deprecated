@@ -8,7 +8,6 @@ interface UserPageProps {
 }
 
 const User: NextPage<UserPageProps> = ({ player }) => {
-	console.log(player)
 	return (
 		<div className="w-screen">
 			<SteamPlayerComponent player={new SteamPlayer(player)} />
