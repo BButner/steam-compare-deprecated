@@ -13,7 +13,7 @@ export const SteamFriendsComponent: React.FC<SteamFriendsComponentProps> = ({
 }) => {
 	const [filter, setFilter] = useState<string>("")
 	return (
-		<div className="m-auto w-1/2">
+		<div className="mx-auto w-1/2 p-2">
 			<h2>Compare by Friend</h2>
 			<div className="flex flex-wrap">
 				<input
