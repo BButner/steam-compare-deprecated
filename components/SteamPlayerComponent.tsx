@@ -12,7 +12,7 @@ export const SteamPlayerComponent: React.FC<SteamPlayerComponentProps> = ({
 }) => {
 	return (
 		<div className="w-full">
-			<div className="flex items-center justify-center space-x-6 py-4">
+			<div className="flex items-center justify-center space-x-6 pt-6">
 				<div className="relative">
 					<Image
 						alt={`Player avatar for ${player.personaName}`}

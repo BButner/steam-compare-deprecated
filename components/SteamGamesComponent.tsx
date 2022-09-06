@@ -39,9 +39,9 @@ export const SteamGamesComponent: React.FC<SteamGamesComponentProps> = ({ games 
 											height={32}
 											src={`http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`}
 										/>
-										<div className="ml-2 space-y-1 overflow-ellipsis">
-											<p className="m-0 whitespace-nowrap font-semibold">{game.name}</p>
-										</div>
+										<p className="m-0 overflow-hidden overflow-ellipsis whitespace-nowrap px-2 font-semibold">
+											{game.name}
+										</p>
 									</div>
 								</button>
 							)
