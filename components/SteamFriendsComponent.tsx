@@ -15,7 +15,7 @@ export const SteamFriendsComponent: React.FC<SteamFriendsComponentProps> = ({
 		<div className="m-auto flex w-1/2 flex-wrap">
 			<input
 				type="text"
-				placeholder="Search Friends"
+				placeholder="Search Friends..."
 				value={filter}
 				onChange={(e) => setFilter(e.target.value)}
 				className="mb-4 block w-full rounded-md py-2 px-4"

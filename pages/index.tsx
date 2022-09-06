@@ -22,15 +22,15 @@ const Home: NextPage = () => {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
-			<main className="bg-transparent">
-				<div className="space-y-2">
+			<main className="w-1/3 bg-transparent">
+				<div className="w-full space-y-2">
 					<h2>Enter your SteamID</h2>
-					<div className="flex rounded shadow-lg">
-						<form onSubmit={(e) => handleSteamId(e)} className="flex">
+					<div className="flex w-full rounded shadow-lg">
+						<form onSubmit={(e) => handleSteamId(e)} className="flex w-full">
 							<input
 								value={steamId}
 								onChange={(e) => setSteamId(e.target.value)}
-								className="rounded-l rounded-r-none border-t-4 border-l-4 border-b-4 border-r-0 border-violet-400 p-4 text-4xl"
+								className="w-full rounded-l rounded-r-none border-t-4 border-l-4 border-b-4 border-r-0 border-violet-400 p-4 text-2xl"
 								type="text"
 							/>
 							<button className="h-full rounded-r bg-violet-400 px-6 outline-none duration-200 hover:bg-violet-500 focus:ring-4 focus:ring-violet-500/50 active:bg-violet-600">
