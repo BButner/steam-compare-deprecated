@@ -1,4 +1,6 @@
 import { GetServerSideProps, NextPage } from "next"
+import Head from "next/head"
+import { NextSeo } from "next-seo"
 import { useEffect } from "react"
 import { useState } from "react"
 
@@ -28,6 +30,29 @@ const User: NextPage<UserPageProps> = ({ player }) => {
 
 	return (
 		<div className="w-full">
+			<NextSeo
+				title={`${player.personaName} | Steam Compare Profile`}
+				description="Select Friends or Games to compare against."
+				canonical="https://www.canonical.ie/"
+				openGraph={{
+					url: "https://www.url.ie/a",
+					title: `${player.personaName} | Steam Compare Profile`,
+					description: "Select Friends or Games to compare against.",
+					images: [
+						{
+							url: player.avatarFull,
+							width: 184,
+							height: 184,
+							alt: `${player.personaName} avatar`,
+							type: "image/jpeg",
+						},
+					],
+					site_name: "Steam Compare",
+				}}
+			/>
+			<Head>
+				<title>{`${player.personaName} | Steam Compare Profile`}</title>
+			</Head>
 			<SteamPlayerComponent player={new SteamPlayer(player)} />
 			<SteamFriendsComponent
 				friends={friends.map((friend) => new SteamPlayer(friend))}

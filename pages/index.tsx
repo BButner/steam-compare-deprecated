@@ -1,8 +1,12 @@
 import { ChevronRightIcon } from "@heroicons/react/24/solid"
 import type { NextPage } from "next"
 import Head from "next/head"
+import Image from "next/image"
 import { useRouter } from "next/router"
 import { FormEvent, useState } from "react"
+
+import Logo from "../resources/logo.svg"
+import { LogoSvg } from "../resources/LogoSvg"
 
 const Home: NextPage = () => {
 	const [steamId, setSteamId] = useState<string>("")
@@ -22,8 +26,9 @@ const Home: NextPage = () => {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
-			<main className="w-1/3 bg-transparent">
+			<main className="w-3/4 bg-transparent lg:w-1/3">
 				<div className="w-full space-y-2">
+					<LogoSvg width={200} height={200} className="m-auto mb-32" />
 					<h2>Enter your SteamID</h2>
 					<div className="flex w-full rounded shadow-lg">
 						<form onSubmit={(e) => handleSteamId(e)} className="flex w-full">
