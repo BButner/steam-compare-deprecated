@@ -11,7 +11,7 @@ export const SteamPlayerComponent: React.FC<SteamPlayerComponentProps> = ({
 	player,
 }) => {
 	return (
-		<div className="">
+		<div className="w-full">
 			<div className="flex items-center justify-center space-x-6 py-4">
 				<div className="relative">
 					<Image

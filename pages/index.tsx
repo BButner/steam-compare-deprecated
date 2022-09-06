@@ -30,10 +30,10 @@ const Home: NextPage = () => {
 							<input
 								value={steamId}
 								onChange={(e) => setSteamId(e.target.value)}
-								className="rounded-l p-4 text-4xl outline-none duration-200 focus:ring-4 focus:ring-blue-500/50 dark:bg-gray-900"
+								className="rounded-l rounded-r-none border-t-4 border-l-4 border-b-4 border-r-0 border-violet-400 p-4 text-4xl"
 								type="text"
 							/>
-							<button className="h-full rounded-r bg-blue-500 px-6 outline-none duration-200 hover:bg-blue-600 focus:ring-4 focus:ring-blue-500/50 active:bg-blue-700">
+							<button className="h-full rounded-r bg-violet-400 px-6 outline-none duration-200 hover:bg-violet-500 focus:ring-4 focus:ring-violet-500/50 active:bg-violet-600">
 								<ChevronRightIcon className="h-8 w-8 text-white" />
 							</button>
 						</form>
