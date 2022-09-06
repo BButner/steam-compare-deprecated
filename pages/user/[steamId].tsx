@@ -1,22 +1,33 @@
+import { useAtomValue } from "jotai"
+import { useAtom } from "jotai"
 import { GetServerSideProps, NextPage } from "next"
 import Head from "next/head"
 import { NextSeo } from "next-seo"
 import { useEffect } from "react"
 import { useState } from "react"
 
+import { CompareByFriendsComponent } from "../../components/CompareByFriendsComponent"
 import { SteamFriendsComponent } from "../../components/SteamFriendsComponent"
 import { SteamGamesComponent } from "../../components/SteamGamesComponent"
 import { SteamPlayerComponent } from "../../components/SteamPlayerComponent"
 import { ISteamPlayer, SteamPlayer } from "../../lib/models/steamPlayer"
+import {
+	friendsAtom,
+	selectedSteamGamesAtom,
+	selectedSteamPlayersAtom,
+} from "../../lib/store"
 
 interface UserPageProps {
 	player: ISteamPlayer
 }
 
 const User: NextPage<UserPageProps> = ({ player }) => {
-	const [friends, setFriends] = useState<SteamPlayer[]>([])
+	const [friends, setFriends] = useAtom(friendsAtom)
 
-	console.log(player.games.filter((game) => game.img_logo_url))
+	const user = new SteamPlayer(player)
+
+	const selectedPlayers = useAtomValue(selectedSteamPlayersAtom)
+	const selectedGames = useAtomValue(selectedSteamGamesAtom)
 
 	useEffect(() => {
 		fetch(`/api/user/${player.steamId}/friends`)
@@ -29,24 +40,24 @@ const User: NextPage<UserPageProps> = ({ player }) => {
 				console.error(err)
 				return null
 			})
-	}, [player])
+	}, [player, setFriends])
 
 	return (
 		<div className="w-full">
 			<NextSeo
-				title={`${player.personaName} | Steam Compare Profile`}
+				title={`${user.personaName} | Steam Compare Profile`}
 				description="Select Friends or Games to compare against."
 				canonical="https://www.canonical.ie/"
 				openGraph={{
 					url: "https://www.url.ie/a",
-					title: `${player.personaName} | Steam Compare Profile`,
+					title: `${user.personaName} | Steam Compare Profile`,
 					description: "Select Friends or Games to compare against.",
 					images: [
 						{
-							url: player.avatarFull,
+							url: user.avatarFull,
 							width: 184,
 							height: 184,
-							alt: `${player.personaName} avatar`,
+							alt: `${user.personaName} avatar`,
 							type: "image/jpeg",
 						},
 					],
@@ -54,15 +65,20 @@ const User: NextPage<UserPageProps> = ({ player }) => {
 				}}
 			/>
 			<Head>
-				<title>{`${player.personaName} | Steam Compare Profile`}</title>
+				<title>{`${user.personaName} | Steam Compare Profile`}</title>
 			</Head>
-			<SteamPlayerComponent player={new SteamPlayer(player)} />
-			<div className="flex items-start p-4">
-				<SteamFriendsComponent
-					friends={friends.map((friend) => new SteamPlayer(friend))}
-				/>
-				<SteamGamesComponent games={player.games} />
-			</div>
+			<SteamPlayerComponent player={user} />
+			{selectedGames.length === 0 && selectedPlayers.length === 0 && (
+				<div className="flex items-start p-4">
+					<SteamFriendsComponent
+						className="mx-auto w-1/2 p-2"
+					/>
+					<SteamGamesComponent games={player.games} />
+				</div>
+			)}
+			{selectedPlayers.length > 0 && (
+				<CompareByFriendsComponent player={user} />
+			)}
 		</div>
 	)
 }

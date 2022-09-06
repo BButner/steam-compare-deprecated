@@ -1,19 +1,33 @@
 import clsx from "clsx"
+import { useAtom, useAtomValue } from "jotai"
 import Image from "next/image"
+import { useEffect } from "react"
 import { useState } from "react"
 
 import { SteamPlayer } from "../lib/models/steamPlayer"
+import { friendsAtom, selectedSteamPlayersAtom } from "../lib/store"
 
 interface SteamFriendsComponentProps {
-	friends: SteamPlayer[]
+	className?: string
 }
 
 export const SteamFriendsComponent: React.FC<SteamFriendsComponentProps> = ({
-	friends,
+	className,
 }) => {
+	const friends = useAtomValue(friendsAtom)
 	const [filter, setFilter] = useState<string>("")
+	const [selectedFriends, setSelectedFriends] = useAtom(selectedSteamPlayersAtom)
+
+	const selectFriend = (friend: SteamPlayer) => {
+		if (selectedFriends.includes(friend)) {
+			setSelectedFriends((prev) => prev.filter((f) => f !== friend))
+		} else {
+			setSelectedFriends((prev) => prev.concat(friend))
+		}
+	}
+
 	return (
-		<div className="mx-auto w-1/2 p-2">
+		<div className={className}>
 			<h2>Compare by Friend</h2>
 			<div className="flex flex-wrap">
 				<input
@@ -34,13 +48,17 @@ export const SteamFriendsComponent: React.FC<SteamFriendsComponentProps> = ({
 								disabled={friend.games.length === 0}
 								className="block w-1/2 text-left"
 								key={friend.steamId}
+								onClick={() => selectFriend(friend)}
 							>
 								<div
 									className={clsx(
-										"shadow-ld m-2 flex justify-start overflow-hidden rounded bg-white duration-200 hover:cursor-pointer hover:bg-violet-400 hover:text-white dark:bg-black",
+										"shadow-ld m-2 flex justify-start overflow-hidden rounded duration-200 hover:cursor-pointer hover:bg-violet-400 hover:text-white",
 										friend.games.length === 0
 											? "bg-red-500 text-white opacity-50 hover:cursor-default hover:bg-red-500"
 											: "",
+										selectedFriends.includes(friend)
+											? "bg-violet-400 text-white"
+											: "bg-white dark:bg-black",
 									)}
 								>
 									<Image
