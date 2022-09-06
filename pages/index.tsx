@@ -26,7 +26,7 @@ const Home: NextPage = () => {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
-			<main className="w-3/4 bg-transparent lg:w-1/3">
+			<main className="w-3/4 bg-transparent md:w-2/3 lg:w-1/2 xl:w-1/3">
 				<div className="w-full space-y-2">
 					<LogoSvg width={200} height={200} className="m-auto mb-32" />
 					<h2>Enter your SteamID</h2>

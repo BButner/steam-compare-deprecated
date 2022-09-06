@@ -1,3 +1,5 @@
+import { ISteamGame } from "./steamGame"
+
 export interface ISteamPlayer {
 	steamId: string
 	personaName: string
@@ -6,6 +8,7 @@ export interface ISteamPlayer {
 	avatarMedium: string
 	avatarFull: string
 	personaState: IPersonaState
+	games: ISteamGame[]
 }
 
 export class SteamPlayer implements ISteamPlayer {
@@ -16,6 +19,7 @@ export class SteamPlayer implements ISteamPlayer {
 	public avatarMedium: string
 	public avatarFull: string
 	public personaState: IPersonaState
+	public games: ISteamGame[]
 
 	public constructor(player: ISteamPlayer) {
 		this.steamId = player.steamId
@@ -25,6 +29,7 @@ export class SteamPlayer implements ISteamPlayer {
 		this.avatarMedium = player.avatarMedium
 		this.avatarFull = player.avatarFull
 		this.personaState = player.personaState
+		this.games = player.games
 	}
 
 	// Parse the persona state from enum to a string
