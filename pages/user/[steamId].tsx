@@ -110,7 +110,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	const { steamId } = context.params as { steamId: string }
 
 	const player: ISteamPlayer | null = await fetch(
-		`https://api.steamcompare.games/user/${steamId}`,
+		`${process.env.NEXT_PUBLIC_API_URL ?? ""}/user/${steamId}`,
 	)
 		.then((res) => res.json())
 		.then((data) => data as ISteamPlayer)
