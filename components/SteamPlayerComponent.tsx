@@ -14,12 +14,16 @@ export const SteamPlayerComponent: React.FC<SteamPlayerComponentProps> = ({
 		<div className="w-full">
 			<div className="flex items-center justify-center space-x-6 pt-6">
 				<div className="relative">
-					<Image
+					<img
 						alt={`Player avatar for ${player.personaName}`}
 						src={player.avatarFull}
+						style={{
+							width: "184px",
+							height: "184px",
+						}}
 						width={184}
 						height={184}
-						className="relative rounded-xl"
+						className="m-0 rounded-xl"
 					/>
 					<div
 						className={clsx(

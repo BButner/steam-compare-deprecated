@@ -82,11 +82,12 @@ export const SteamFriendsComponent: React.FC<SteamFriendsComponentProps> = ({
 											: "",
 									)}
 								>
-									<Image
+									<img
 										alt={`User avatar for ${friend.personaName}`}
 										width={64}
 										height={64}
 										src={friend.avatarMedium}
+										className="m-0"
 									/>
 									<div className="ml-2 space-y-1">
 										<p className="m-0 font-semibold">{friend.personaName}</p>
