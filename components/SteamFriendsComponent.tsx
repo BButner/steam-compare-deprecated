@@ -1,11 +1,11 @@
 import { XMarkIcon } from "@heroicons/react/24/solid"
 import clsx from "clsx"
-import { useAtom, useAtomValue } from "jotai"
+import { useAtom } from "jotai"
 import Image from "next/image"
 import { useState } from "react"
 
 import { SteamPlayer } from "../lib/models/steamPlayer"
-import { friendsAtom, selectedSteamPlayersAtom } from "../lib/store"
+import { selectedSteamPlayersAtom } from "../lib/store"
 
 interface SteamFriendsComponentProps {
 	className?: string
