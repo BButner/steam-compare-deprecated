@@ -1,24 +1,50 @@
+import { XMarkIcon } from "@heroicons/react/24/solid"
 import clsx from "clsx"
+import { useAtom } from "jotai"
 import Image from "next/image"
 import { useState } from "react"
 
 import { ISteamGame } from "../lib/models/steamGame"
+import { selectedSteamGamesAtom } from "../lib/store"
 
 interface SteamGamesComponentProps {
 	games?: ISteamGame[]
 	readonly?: boolean
 	className?: string
+	isCompareMaster?: boolean
 }
 
 export const SteamGamesComponent: React.FC<SteamGamesComponentProps> = ({
 	games,
 	readonly,
 	className,
+	isCompareMaster,
 }) => {
 	const [filter, setFilter] = useState<string>("")
+	const [selectedGames, setSelectedGames] = useAtom(selectedSteamGamesAtom)
+
+	const selectGame = (game: ISteamGame) => {
+		if (selectedGames.includes(game)) {
+			setSelectedGames((prev) => prev.filter((f) => f !== game))
+		} else {
+			setSelectedGames((prev) => prev.concat(game))
+		}
+	}
+
 	return (
 		<div className={className}>
-			<h2>{readonly ? "Games in Common" : "Compare by Game"}</h2>
+			{!isCompareMaster && <h2>{readonly ? "Games in Common" : "Compare by Game"}</h2>}
+			{isCompareMaster && (
+				<div className="flex items-center">
+					<h2>Comparing by Game</h2>
+					<button
+						onClick={() => setSelectedGames([])}
+						className="mt-6 ml-2 flex h-8 w-8 items-center justify-center rounded bg-red-400 outline-none duration-200 hover:bg-red-500 focus:ring-4 focus:ring-red-400/50 active:bg-red-700"
+					>
+						<XMarkIcon className="h-6 w-6 text-white" />
+					</button>
+				</div>
+			)}
 			<div className="flex flex-wrap">
 				<input
 					type="text"
@@ -33,13 +59,20 @@ export const SteamGamesComponent: React.FC<SteamGamesComponentProps> = ({
 						.sort((a, b) => a.name.localeCompare(b.name))
 						.map((game) => {
 							return (
-								<button className="block w-1/2 text-left" key={game.appid}>
+								<button
+									onClick={() => selectGame(game)}
+									className="block w-1/2 text-left"
+									key={game.appid}
+								>
 									<div
 										className={clsx(
-											"shadow-ld m-2 flex justify-start overflow-hidden rounded bg-white duration-200 dark:bg-black",
+											"shadow-ld m-2 flex justify-start overflow-hidden rounded duration-200",
 											readonly
 												? ""
 												: "hover:cursor-pointer hover:bg-violet-400 hover:text-white",
+											selectedGames.includes(game)
+												? "bg-violet-400 text-white"
+												: "bg-white dark:bg-black",
 										)}
 									>
 										<Image

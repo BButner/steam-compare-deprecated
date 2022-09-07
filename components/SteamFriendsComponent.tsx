@@ -10,13 +10,16 @@ import { friendsAtom, selectedSteamPlayersAtom } from "../lib/store"
 interface SteamFriendsComponentProps {
 	className?: string
 	isCompareMaster?: boolean
+	readonly?: boolean
+	friends: SteamPlayer[]
 }
 
 export const SteamFriendsComponent: React.FC<SteamFriendsComponentProps> = ({
 	className,
 	isCompareMaster,
+	readonly,
+	friends,
 }) => {
-	const friends = useAtomValue(friendsAtom)
 	const [filter, setFilter] = useState<string>("")
 	const [selectedFriends, setSelectedFriends] = useAtom(selectedSteamPlayersAtom)
 
@@ -30,7 +33,9 @@ export const SteamFriendsComponent: React.FC<SteamFriendsComponentProps> = ({
 
 	return (
 		<div className={clsx(className, "relative")}>
-			{!isCompareMaster && <h2>Compare by Friend</h2>}
+			{!isCompareMaster && (
+				<h2>{readonly ? "Friends in Common" : "Compare by Friend"}</h2>
+			)}
 			{isCompareMaster && (
 				<div className="flex items-center">
 					<h2>Comparing by Friend</h2>
