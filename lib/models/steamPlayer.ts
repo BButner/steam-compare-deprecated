@@ -8,7 +8,7 @@ export interface ISteamPlayer {
 	avatarMedium: string
 	avatarFull: string
 	personaState: IPersonaState
-	games: ISteamGame[]
+	games?: ISteamGame[]
 }
 
 export class SteamPlayer implements ISteamPlayer {
@@ -19,7 +19,7 @@ export class SteamPlayer implements ISteamPlayer {
 	public avatarMedium: string
 	public avatarFull: string
 	public personaState: IPersonaState
-	public games: ISteamGame[]
+	public games?: ISteamGame[]
 
 	public constructor(player: ISteamPlayer) {
 		this.steamId = player.steamId

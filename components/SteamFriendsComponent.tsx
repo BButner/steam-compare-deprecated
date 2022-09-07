@@ -1,7 +1,7 @@
+import { XMarkIcon } from "@heroicons/react/24/solid"
 import clsx from "clsx"
 import { useAtom, useAtomValue } from "jotai"
 import Image from "next/image"
-import { useEffect } from "react"
 import { useState } from "react"
 
 import { SteamPlayer } from "../lib/models/steamPlayer"
@@ -9,10 +9,12 @@ import { friendsAtom, selectedSteamPlayersAtom } from "../lib/store"
 
 interface SteamFriendsComponentProps {
 	className?: string
+	isCompareMaster?: boolean
 }
 
 export const SteamFriendsComponent: React.FC<SteamFriendsComponentProps> = ({
 	className,
+	isCompareMaster,
 }) => {
 	const friends = useAtomValue(friendsAtom)
 	const [filter, setFilter] = useState<string>("")
@@ -27,8 +29,19 @@ export const SteamFriendsComponent: React.FC<SteamFriendsComponentProps> = ({
 	}
 
 	return (
-		<div className={className}>
-			<h2>Compare by Friend</h2>
+		<div className={clsx(className, "relative")}>
+			{!isCompareMaster && <h2>Compare by Friend</h2>}
+			{isCompareMaster && (
+				<div className="flex items-center">
+					<h2>Comparing by Friend</h2>
+					<button
+						onClick={() => setSelectedFriends([])}
+						className="mt-6 ml-2 flex h-8 w-8 items-center justify-center rounded bg-red-400 outline-none duration-200 hover:bg-red-500 focus:ring-4 focus:ring-red-400/50 active:bg-red-700"
+					>
+						<XMarkIcon className="h-6 w-6 text-white" />
+					</button>
+				</div>
+			)}
 			<div className="flex flex-wrap">
 				<input
 					type="text"
@@ -45,7 +58,7 @@ export const SteamFriendsComponent: React.FC<SteamFriendsComponentProps> = ({
 					.map((friend) => {
 						return (
 							<button
-								disabled={friend.games.length === 0}
+								disabled={!friend.games || friend.games.length === 0}
 								className="block w-1/2 text-left"
 								key={friend.steamId}
 								onClick={() => selectFriend(friend)}
@@ -53,12 +66,15 @@ export const SteamFriendsComponent: React.FC<SteamFriendsComponentProps> = ({
 								<div
 									className={clsx(
 										"shadow-ld m-2 flex justify-start overflow-hidden rounded duration-200 hover:cursor-pointer hover:bg-violet-400 hover:text-white",
-										friend.games.length === 0
-											? "bg-red-500 text-white opacity-50 hover:cursor-default hover:bg-red-500"
+										selectedFriends.includes(friend) ? "bg-violet-400 text-white" : "",
+										!selectedFriends.includes(friend) &&
+											friend.games &&
+											friend.games.length > 0
+											? "bg-white dark:bg-black"
 											: "",
-										selectedFriends.includes(friend)
-											? "bg-violet-400 text-white"
-											: "bg-white dark:bg-black",
+										!friend.games || friend.games.length === 0
+											? "bg-red-500/50 text-white opacity-50 hover:cursor-default hover:bg-red-500/50"
+											: "",
 									)}
 								>
 									<Image

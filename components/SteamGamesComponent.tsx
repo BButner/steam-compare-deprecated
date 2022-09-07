@@ -5,14 +5,20 @@ import { useState } from "react"
 import { ISteamGame } from "../lib/models/steamGame"
 
 interface SteamGamesComponentProps {
-	games: ISteamGame[]
+	games?: ISteamGame[]
+	readonly?: boolean
+	className?: string
 }
 
-export const SteamGamesComponent: React.FC<SteamGamesComponentProps> = ({ games }) => {
+export const SteamGamesComponent: React.FC<SteamGamesComponentProps> = ({
+	games,
+	readonly,
+	className,
+}) => {
 	const [filter, setFilter] = useState<string>("")
 	return (
-		<div className="mx-auto w-1/2 p-2">
-			<h2>Compare by Game</h2>
+		<div className={className}>
+			<h2>{readonly ? "Games in Common" : "Compare by Game"}</h2>
 			<div className="flex flex-wrap">
 				<input
 					type="text"
@@ -30,7 +36,10 @@ export const SteamGamesComponent: React.FC<SteamGamesComponentProps> = ({ games 
 								<button className="block w-1/2 text-left" key={game.appid}>
 									<div
 										className={clsx(
-											"shadow-ld m-2 flex justify-start overflow-hidden rounded bg-white duration-200 hover:cursor-pointer hover:bg-violet-400 hover:text-white dark:bg-black",
+											"shadow-ld m-2 flex justify-start overflow-hidden rounded bg-white duration-200 dark:bg-black",
+											readonly
+												? ""
+												: "hover:cursor-pointer hover:bg-violet-400 hover:text-white",
 										)}
 									>
 										<Image
