@@ -75,7 +75,7 @@ export const SteamFriendsComponent: React.FC<SteamFriendsComponentProps> = ({
 										!selectedFriends.includes(friend) &&
 											friend.games &&
 											friend.games.length > 0
-											? "bg-white dark:bg-black"
+											? "bg-white dark:bg-gray-800"
 											: "",
 										!friend.games || friend.games.length === 0
 											? "bg-red-500/50 text-white opacity-50 hover:cursor-default hover:bg-red-500/50"

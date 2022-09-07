@@ -72,7 +72,7 @@ export const SteamGamesComponent: React.FC<SteamGamesComponentProps> = ({
 												: "hover:cursor-pointer hover:bg-violet-400 hover:text-white",
 											selectedGames.includes(game)
 												? "bg-violet-400 text-white"
-												: "bg-white dark:bg-black",
+												: "bg-white dark:bg-gray-800",
 										)}
 									>
 										<Image
