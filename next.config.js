@@ -6,7 +6,7 @@ const nextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: "https://api.steamcompare.games/:path*",
+        destination: "http://localhost:3001/:path*",
       }
     ]
   },
