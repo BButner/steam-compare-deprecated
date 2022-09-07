@@ -1,0 +1,35 @@
+.loadingBar {
+	top: 0px;
+	height: 100%;
+	position: absolute;
+	@apply bg-purple-400;
+	animation-name: animateLoadingBar;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+}
+
+@keyframes animateLoadingBar {
+	0% {
+		opacity: .25;
+		left: 0px;
+		width: 0%;
+	}
+	40% {
+		left: 0px;
+		width: 100%;
+	}
+	50% {
+		opacity: 1;
+		right: 0px;
+		width: 100%;
+	}
+	60% {
+		right: 0px;
+		width: 100%;
+	}
+	100% {
+		opacity: .25;
+		right: 0px;
+		width: 0%;
+	}
+}

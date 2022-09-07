@@ -39,13 +39,13 @@ const User: NextPage<UserPageProps> = ({ player }) => {
 				.then((data: ISteamPlayer[]) => {
 					console.log(data)
 					setFriends(data.map((p) => new SteamPlayer(p)))
+					setFriendsLoaded(true)
 				})
 				.catch((err) => {
 					console.error(err)
+					setFriendsLoaded(true)
 					return null
 				})
-
-			setFriendsLoaded(true)
 		}
 
 		if (!gamesLoaded) {
@@ -58,12 +58,12 @@ const User: NextPage<UserPageProps> = ({ player }) => {
 						prev.games = data
 						return prev
 					})
+					setGamesLoaded(true)
 				})
 				.catch((err) => {
+					setGamesLoaded(true)
 					console.log(err)
 				})
-
-			setGamesLoaded(true)
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user])
@@ -96,8 +96,16 @@ const User: NextPage<UserPageProps> = ({ player }) => {
 			<SteamPlayerComponent player={user} />
 			{selectedGames.length === 0 && selectedPlayers.length === 0 && (
 				<div className="flex items-start p-4">
-					<SteamFriendsComponent friends={friends} className="mx-auto w-1/2 p-2" />
-					<SteamGamesComponent className="mx-auto w-1/2 p-2" games={user.games} />
+					<SteamFriendsComponent
+						loaded={friendsLoaded}
+						friends={friends}
+						className="mx-auto w-1/2 p-2"
+					/>
+					<SteamGamesComponent
+						loaded={gamesLoaded}
+						className="mx-auto w-1/2 p-2"
+						games={user.games}
+					/>
 				</div>
 			)}
 			{selectedPlayers.length > 0 && <CompareByFriendsComponent player={user} />}

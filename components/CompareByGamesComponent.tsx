@@ -26,11 +26,13 @@ export const CompareByGamesComponent: React.FC<CompareByGamesComponentProps> = (
 				friends={commonFriends}
 				className="mx-auto w-1/2 p-2"
 				readonly
+				loaded
 			/>
 			<SteamGamesComponent
 				className="mx-auto w-1/2 p-2"
 				games={player.games}
 				isCompareMaster
+				loaded
 			/>
 		</div>
 	)
