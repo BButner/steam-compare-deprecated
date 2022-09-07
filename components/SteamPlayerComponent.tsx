@@ -23,7 +23,7 @@ export const SteamPlayerComponent: React.FC<SteamPlayerComponentProps> = ({
 						}}
 						width={184}
 						height={184}
-						className="rounded-xl m-0"
+						className="m-0 rounded-xl"
 					/>
 					<div
 						className={clsx(

@@ -75,7 +75,6 @@ export const SteamGamesComponent: React.FC<SteamGamesComponentProps> = ({
 												: "bg-white dark:bg-gray-800",
 										)}
 									>
-
 										<img
 											alt={`Game logo for ${game.name}`}
 											width={32}
