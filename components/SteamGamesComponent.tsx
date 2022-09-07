@@ -75,11 +75,13 @@ export const SteamGamesComponent: React.FC<SteamGamesComponentProps> = ({
 												: "bg-white dark:bg-gray-800",
 										)}
 									>
-										<Image
+
+										<img
 											alt={`Game logo for ${game.name}`}
 											width={32}
 											height={32}
 											src={`http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`}
+											className="m-0"
 										/>
 										<p className="m-0 overflow-hidden overflow-ellipsis whitespace-nowrap px-2 font-semibold">
 											{game.name}
