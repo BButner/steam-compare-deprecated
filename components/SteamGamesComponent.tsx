@@ -42,7 +42,7 @@ export const SteamGamesComponent: React.FC<SteamGamesComponentProps> = ({
 					<h2>Comparing by Game</h2>
 					<button
 						onClick={() => setSelectedGames([])}
-						className="mt-6 ml-2 flex h-8 w-8 items-center justify-center rounded bg-red-400 outline-none duration-200 hover:bg-red-500 focus:ring-4 focus:ring-red-400/50 active:bg-red-700"
+						className="mt-6 ml-2 flex h-8 w-8 items-center justify-center rounded bg-red-400 p-0 outline-none duration-200 hover:bg-red-500 focus:ring-4 focus:ring-red-400/50 active:bg-red-700"
 					>
 						<XMarkIcon className="h-6 w-6 text-white" />
 					</button>
