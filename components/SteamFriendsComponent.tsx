@@ -67,35 +67,41 @@ export const SteamFriendsComponent: React.FC<SteamFriendsComponentProps> = ({
 						.sort((a, b) => a.personaName.localeCompare(b.personaName))
 						.map((friend) => {
 							return (
-								<button
-									disabled={!friend.games || friend.games.length === 0}
-									className={clsx(
-										"shadow-ld prose m-2 flex w-[48%] justify-start overflow-hidden rounded p-0 text-left duration-200 hover:cursor-pointer hover:bg-violet-400 hover:text-white active:text-white",
-										selectedFriends.includes(friend) ? "bg-violet-400 text-white" : "",
-										!selectedFriends.includes(friend) &&
-											friend.games &&
-											friend.games.length > 0
-											? "bg-white dark:bg-gray-800"
-											: "",
-										!friend.games || friend.games.length === 0
-											? "bg-red-500/50 text-white opacity-50 hover:cursor-default hover:bg-red-500/50"
-											: "",
-									)}
-									key={friend.steamId}
-									onClick={() => selectFriend(friend)}
-								>
-									<img
-										alt={`User avatar for ${friend.personaName}`}
-										width={64}
-										height={64}
-										src={friend.avatarMedium}
-										className="m-0"
-									/>
-									<div className="ml-2 space-y-1">
-										<p className="m-0 font-semibold">{friend.personaName}</p>
-										<i className="text-sm">{friend.steamId}</i>
-									</div>
-								</button>
+								<div className="w-1/2 p-2" key={friend.steamId}>
+									<button
+										disabled={!friend.games || friend.games.length === 0 || readonly}
+										className={clsx(
+											"shadow-ld flex w-full justify-start overflow-hidden rounded p-0 text-left text-black duration-200 hover:cursor-pointer dark:text-white",
+											readonly
+												? "hover:cursor-default hover:bg-white hover:dark:bg-gray-800"
+												: "hover:bg-violet-400 hover:text-white active:text-white",
+											selectedFriends.includes(friend)
+												? "bg-violet-400 text-white"
+												: "",
+											!selectedFriends.includes(friend) &&
+												friend.games &&
+												friend.games.length > 0
+												? "bg-white dark:bg-gray-800"
+												: "",
+											!friend.games || friend.games.length === 0
+												? "bg-red-500/50 text-white opacity-50 hover:cursor-default hover:bg-red-500/50"
+												: "",
+										)}
+										onClick={() => selectFriend(friend)}
+									>
+										<img
+											alt={`User avatar for ${friend.personaName}`}
+											width={64}
+											height={64}
+											src={friend.avatarMedium}
+											className="m-0"
+										/>
+										<div className="ml-2 space-y-1">
+											<p className="m-0 font-semibold">{friend.personaName}</p>
+											<i className="text-sm">{friend.steamId}</i>
+										</div>
+									</button>
+								</div>
 							)
 						})}
 			</div>

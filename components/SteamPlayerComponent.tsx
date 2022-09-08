@@ -52,11 +52,11 @@ export const SteamPlayerComponent: React.FC<SteamPlayerComponentProps> = ({
 					<a
 						href={`https://steamcommunity.com/profiles/${player.steamId}/`}
 						target="_blank"
-						className="mt-4 flex items-center rounded-lg bg-violet-400 px-2 py-1 text-white no-underline shadow-lg focus:ring-4 focus:ring-violet-400/50"
+						className="mt-4 flex items-center rounded-lg bg-violet-400 px-2 py-1 text-white no-underline shadow-lg outline-none focus:ring-4 focus:ring-violet-400/50"
 						rel="noreferrer"
 					>
 						Open Profile on Steam
-						<ArrowTopRightOnSquareIcon className="h-5 w-5" />
+						<ArrowTopRightOnSquareIcon className="ml-2 h-5 w-5" />
 					</a>
 				</div>
 			</div>
