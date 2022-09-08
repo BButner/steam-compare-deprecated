@@ -84,7 +84,7 @@ export const SteamFriendsComponent: React.FC<SteamFriendsComponentProps> = ({
 												? "bg-white dark:bg-gray-800"
 												: "",
 											!friend.games || friend.games.length === 0
-												? "bg-red-500/50 text-white opacity-50 hover:cursor-default hover:bg-red-500/50"
+												? "bg-red-500/50 text-white opacity-50 hover:cursor-default hover:bg-red-500/50 hover:text-black hover:dark:text-white"
 												: "",
 										)}
 										onClick={() => selectFriend(friend)}
