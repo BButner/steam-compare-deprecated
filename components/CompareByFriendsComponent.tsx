@@ -30,8 +30,14 @@ export const CompareByFriendsComponent: React.FC<ComareByFriendsComponentProps> 
 				friends={friends}
 				className="mx-auto w-1/2 p-2"
 				isCompareMaster
+				loaded
 			/>
-			<SteamGamesComponent className="mx-auto w-1/2 p-2" games={commonGames} readonly />
+			<SteamGamesComponent
+				className="mx-auto w-1/2 p-2"
+				games={commonGames}
+				readonly
+				loaded
+			/>
 		</div>
 	)
 }

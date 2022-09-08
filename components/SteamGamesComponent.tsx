@@ -6,12 +6,14 @@ import { useState } from "react"
 
 import { ISteamGame } from "../lib/models/steamGame"
 import { selectedSteamGamesAtom } from "../lib/store"
+import { LoadingBarComponent } from "./LoadingBarComponent"
 
 interface SteamGamesComponentProps {
 	games?: ISteamGame[]
 	readonly?: boolean
 	className?: string
 	isCompareMaster?: boolean
+	loaded: boolean
 }
 
 export const SteamGamesComponent: React.FC<SteamGamesComponentProps> = ({
@@ -19,6 +21,7 @@ export const SteamGamesComponent: React.FC<SteamGamesComponentProps> = ({
 	readonly,
 	className,
 	isCompareMaster,
+	loaded,
 }) => {
 	const [filter, setFilter] = useState<string>("")
 	const [selectedGames, setSelectedGames] = useAtom(selectedSteamGamesAtom)
@@ -53,7 +56,9 @@ export const SteamGamesComponent: React.FC<SteamGamesComponentProps> = ({
 					onChange={(e) => setFilter(e.target.value)}
 					className="mb-4 block w-full rounded-md py-2 px-4"
 				/>
-				{games &&
+				{!loaded && <LoadingBarComponent className="m-auto mt-12 w-3/4" />}
+				{loaded &&
+					games &&
 					games
 						.filter((game) => game.name.toLowerCase().includes(filter.toLowerCase()))
 						.sort((a, b) => a.name.localeCompare(b.name))

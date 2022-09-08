@@ -6,12 +6,14 @@ import { useState } from "react"
 
 import { SteamPlayer } from "../lib/models/steamPlayer"
 import { selectedSteamPlayersAtom } from "../lib/store"
+import { LoadingBarComponent } from "./LoadingBarComponent"
 
 interface SteamFriendsComponentProps {
 	className?: string
 	isCompareMaster?: boolean
 	readonly?: boolean
 	friends: SteamPlayer[]
+	loaded: boolean
 }
 
 export const SteamFriendsComponent: React.FC<SteamFriendsComponentProps> = ({
@@ -19,6 +21,7 @@ export const SteamFriendsComponent: React.FC<SteamFriendsComponentProps> = ({
 	isCompareMaster,
 	readonly,
 	friends,
+	loaded,
 }) => {
 	const [filter, setFilter] = useState<string>("")
 	const [selectedFriends, setSelectedFriends] = useAtom(selectedSteamPlayersAtom)
@@ -55,48 +58,52 @@ export const SteamFriendsComponent: React.FC<SteamFriendsComponentProps> = ({
 					onChange={(e) => setFilter(e.target.value)}
 					className="mb-4 block w-full rounded-md py-2 px-4"
 				/>
-				{friends
-					.filter((friend) =>
-						friend.personaName.toLowerCase().includes(filter.toLowerCase()),
-					)
-					.sort((a, b) => a.personaName.localeCompare(b.personaName))
-					.map((friend) => {
-						return (
-							<button
-								disabled={!friend.games || friend.games.length === 0}
-								className="block w-1/2 text-left"
-								key={friend.steamId}
-								onClick={() => selectFriend(friend)}
-							>
-								<div
-									className={clsx(
-										"shadow-ld m-2 flex justify-start overflow-hidden rounded duration-200 hover:cursor-pointer hover:bg-violet-400 hover:text-white",
-										selectedFriends.includes(friend) ? "bg-violet-400 text-white" : "",
-										!selectedFriends.includes(friend) &&
-											friend.games &&
-											friend.games.length > 0
-											? "bg-white dark:bg-gray-800"
-											: "",
-										!friend.games || friend.games.length === 0
-											? "bg-red-500/50 text-white opacity-50 hover:cursor-default hover:bg-red-500/50"
-											: "",
-									)}
-								>
-									<img
-										alt={`User avatar for ${friend.personaName}`}
-										width={64}
-										height={64}
-										src={friend.avatarMedium}
-										className="m-0"
-									/>
-									<div className="ml-2 space-y-1">
-										<p className="m-0 font-semibold">{friend.personaName}</p>
-										<i className="text-sm">{friend.steamId}</i>
-									</div>
-								</div>
-							</button>
+				{!loaded && <LoadingBarComponent className="m-auto mt-12 w-3/4" />}
+				{loaded &&
+					friends
+						.filter((friend) =>
+							friend.personaName.toLowerCase().includes(filter.toLowerCase()),
 						)
-					})}
+						.sort((a, b) => a.personaName.localeCompare(b.personaName))
+						.map((friend) => {
+							return (
+								<button
+									disabled={!friend.games || friend.games.length === 0}
+									className="block w-1/2 text-left"
+									key={friend.steamId}
+									onClick={() => selectFriend(friend)}
+								>
+									<div
+										className={clsx(
+											"shadow-ld m-2 flex justify-start overflow-hidden rounded duration-200 hover:cursor-pointer hover:bg-violet-400 hover:text-white",
+											selectedFriends.includes(friend)
+												? "bg-violet-400 text-white"
+												: "",
+											!selectedFriends.includes(friend) &&
+												friend.games &&
+												friend.games.length > 0
+												? "bg-white dark:bg-gray-800"
+												: "",
+											!friend.games || friend.games.length === 0
+												? "bg-red-500/50 text-white opacity-50 hover:cursor-default hover:bg-red-500/50"
+												: "",
+										)}
+									>
+										<img
+											alt={`User avatar for ${friend.personaName}`}
+											width={64}
+											height={64}
+											src={friend.avatarMedium}
+											className="m-0"
+										/>
+										<div className="ml-2 space-y-1">
+											<p className="m-0 font-semibold">{friend.personaName}</p>
+											<i className="text-sm">{friend.steamId}</i>
+										</div>
+									</div>
+								</button>
+							)
+						})}
 			</div>
 		</div>
 	)
