@@ -25,3 +25,9 @@ input {
   @apply border-2 border-violet-400;
   @apply shadow-lg;
 }
+
+button {
+  @apply bg-violet-400 hover:bg-violet-500 active:bg-violet-600 text-white py-2 px-4;
+  @apply rounded outline-none duration-200 focus:ring-4 focus:ring-violet-400/50;
+  @apply shadow-lg;
+}

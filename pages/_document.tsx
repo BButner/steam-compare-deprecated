@@ -17,7 +17,9 @@ class MyDocument extends Document {
 	render() {
 		return (
 			<Html>
-				<Head />
+				<Head>
+					<link rel="shortcut icon" href="/logo/0.25x.png" />
+				</Head>
 				<body className="prose max-w-full dark:prose-invert">
 					<Main />
 					<NextScript />

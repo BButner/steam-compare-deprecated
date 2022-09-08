@@ -44,7 +44,7 @@ export const SteamFriendsComponent: React.FC<SteamFriendsComponentProps> = ({
 					<h2>Comparing by Friend</h2>
 					<button
 						onClick={() => setSelectedFriends([])}
-						className="mt-6 ml-2 flex h-8 w-8 items-center justify-center rounded bg-red-400 outline-none duration-200 hover:bg-red-500 focus:ring-4 focus:ring-red-400/50 active:bg-red-700"
+						className="mt-6 ml-2 flex h-8 w-8 items-center justify-center rounded bg-red-400 p-0 outline-none duration-200 hover:bg-red-500 focus:ring-4 focus:ring-red-400/50 active:bg-red-700"
 					>
 						<XMarkIcon className="h-6 w-6 text-white" />
 					</button>
@@ -67,15 +67,14 @@ export const SteamFriendsComponent: React.FC<SteamFriendsComponentProps> = ({
 						.sort((a, b) => a.personaName.localeCompare(b.personaName))
 						.map((friend) => {
 							return (
-								<button
-									disabled={!friend.games || friend.games.length === 0}
-									className="block w-1/2 text-left"
-									key={friend.steamId}
-									onClick={() => selectFriend(friend)}
-								>
-									<div
+								<div className="w-1/2 p-2" key={friend.steamId}>
+									<button
+										disabled={!friend.games || friend.games.length === 0 || readonly}
 										className={clsx(
-											"shadow-ld m-2 flex justify-start overflow-hidden rounded duration-200 hover:cursor-pointer hover:bg-violet-400 hover:text-white",
+											"shadow-ld flex w-full justify-start overflow-hidden rounded p-0 text-left text-black duration-200 hover:cursor-pointer dark:text-white",
+											readonly
+												? "hover:cursor-default hover:bg-white hover:dark:bg-gray-800"
+												: "hover:bg-violet-400 hover:text-white active:text-white",
 											selectedFriends.includes(friend)
 												? "bg-violet-400 text-white"
 												: "",
@@ -85,9 +84,10 @@ export const SteamFriendsComponent: React.FC<SteamFriendsComponentProps> = ({
 												? "bg-white dark:bg-gray-800"
 												: "",
 											!friend.games || friend.games.length === 0
-												? "bg-red-500/50 text-white opacity-50 hover:cursor-default hover:bg-red-500/50"
+												? "bg-red-500/50 text-white opacity-50 hover:cursor-default hover:bg-red-500/50 hover:text-black hover:dark:text-white"
 												: "",
 										)}
+										onClick={() => selectFriend(friend)}
 									>
 										<img
 											alt={`User avatar for ${friend.personaName}`}
@@ -100,8 +100,8 @@ export const SteamFriendsComponent: React.FC<SteamFriendsComponentProps> = ({
 											<p className="m-0 font-semibold">{friend.personaName}</p>
 											<i className="text-sm">{friend.steamId}</i>
 										</div>
-									</div>
-								</button>
+									</button>
+								</div>
 							)
 						})}
 			</div>

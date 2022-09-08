@@ -42,7 +42,7 @@ export const SteamGamesComponent: React.FC<SteamGamesComponentProps> = ({
 					<h2>Comparing by Game</h2>
 					<button
 						onClick={() => setSelectedGames([])}
-						className="mt-6 ml-2 flex h-8 w-8 items-center justify-center rounded bg-red-400 outline-none duration-200 hover:bg-red-500 focus:ring-4 focus:ring-red-400/50 active:bg-red-700"
+						className="mt-6 ml-2 flex h-8 w-8 items-center justify-center rounded bg-red-400 p-0 outline-none duration-200 hover:bg-red-500 focus:ring-4 focus:ring-red-400/50 active:bg-red-700"
 					>
 						<XMarkIcon className="h-6 w-6 text-white" />
 					</button>
@@ -64,16 +64,15 @@ export const SteamGamesComponent: React.FC<SteamGamesComponentProps> = ({
 						.sort((a, b) => a.name.localeCompare(b.name))
 						.map((game) => {
 							return (
-								<button
-									onClick={() => selectGame(game)}
-									className="block w-1/2 text-left"
-									key={game.appid}
-								>
-									<div
+								<div className="w-1/2 p-2" key={game.appid}>
+									<button
+										onClick={() => selectGame(game)}
+										disabled={readonly}
 										className={clsx(
-											"shadow-ld m-2 flex justify-start overflow-hidden rounded duration-200",
+											"block w-full bg-transparent p-0 text-left text-black hover:text-white active:text-white dark:text-white",
+											"shadow-ld flex justify-start overflow-hidden rounded duration-200",
 											readonly
-												? ""
+												? "hover:bg-white hover:text-black active:bg-white dark:hover:bg-gray-800 hover:dark:text-white active:dark:bg-gray-800"
 												: "hover:cursor-pointer hover:bg-violet-400 hover:text-white",
 											selectedGames.includes(game)
 												? "bg-violet-400 text-white"
@@ -84,14 +83,18 @@ export const SteamGamesComponent: React.FC<SteamGamesComponentProps> = ({
 											alt={`Game logo for ${game.name}`}
 											width={32}
 											height={32}
-											src={`http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`}
-											className="m-0"
+											style={{
+												maxWidth: "32px",
+												maxHeight: "32px",
+											}}
+											src={`https://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`}
+											className="m-0 overflow-hidden"
 										/>
 										<p className="m-0 overflow-hidden overflow-ellipsis whitespace-nowrap px-2 font-semibold">
 											{game.name}
 										</p>
-									</div>
-								</button>
+									</button>
+								</div>
 							)
 						})}
 			</div>
