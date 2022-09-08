@@ -84,8 +84,12 @@ export const SteamGamesComponent: React.FC<SteamGamesComponentProps> = ({
 											alt={`Game logo for ${game.name}`}
 											width={32}
 											height={32}
-											src={`http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`}
-											className="m-0"
+											style={{
+												maxWidth: "32px",
+												maxHeight: "32px",
+											}}
+											src={`https://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`}
+											className="m-0 overflow-hidden"
 										/>
 										<p className="m-0 overflow-hidden overflow-ellipsis whitespace-nowrap px-2 font-semibold">
 											{game.name}
