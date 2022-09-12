@@ -37,7 +37,7 @@ export const ComparisonSelector: React.FC<ComparisonSelectorProps> = ({
 					{modes.map((m) => {
 						return (
 							<button
-								className="relative w-36 rounded-none bg-transparent text-center text-lg font-bold text-black shadow-none hover:bg-transparent focus:ring-0 active:bg-transparent dark:text-white"
+								className="relative w-36 rounded-none bg-transparent text-center text-lg font-semibold text-black shadow-none hover:bg-transparent focus:ring-0 active:bg-transparent dark:text-white"
 								onClick={() => setMode(m.mode)}
 								key={m.mode}
 							>

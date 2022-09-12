@@ -4,9 +4,9 @@ import { NextSeo } from "next-seo"
 import { useState } from "react"
 
 import { ComparisonSelector } from "../../components/comparison-selector"
+import { ComparisonWrapper } from "../../components/comparison-wrapper"
 import { SteamPlayerComponent } from "../../components/steam-player"
 import { ISteamPlayer, SteamPlayer } from "../../lib/models/steamPlayer"
-import { ComparisonWrapper } from "../../components/comparison-wrapper"
 
 interface UserPageProps {
 	player: ISteamPlayer
