@@ -29,15 +29,15 @@ export const ComparisonSelector: React.FC<ComparisonSelectorProps> = ({
 
 	return (
 		<div className="mx-0 py-4 text-center">
-			<h3>
+			<h3 className="opacity-75">
 				<i>Compare By</i>
 			</h3>
-			<div className="space-x-12">
+			<div className="space-y-4 lg:space-x-12">
 				<AnimateSharedLayout>
 					{modes.map((m) => {
 						return (
 							<button
-								className="relative w-36 rounded-none bg-transparent text-center text-lg font-semibold text-black shadow-none hover:bg-transparent focus:ring-0 active:bg-transparent dark:text-white"
+								className="relative mx-auto block w-2/3 w-36 rounded-none bg-transparent text-center text-lg font-semibold text-black shadow-none hover:bg-transparent focus:ring-0 active:bg-transparent dark:text-white"
 								onClick={() => setMode(m.mode)}
 								key={m.mode}
 							>
@@ -46,7 +46,7 @@ export const ComparisonSelector: React.FC<ComparisonSelectorProps> = ({
 									<motion.div
 										initial={false}
 										layoutId="underline"
-										className="absolute left-0 bottom-0 h-[3px] w-full bg-violet-400"
+										className="absolute left-0 top-0 h-full w-[3px] bg-violet-400 lg:bottom-0 lg:h-[3px] lg:w-full"
 									/>
 								)}
 							</button>
