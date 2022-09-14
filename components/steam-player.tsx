@@ -1,20 +1,25 @@
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid"
 import clsx from "clsx"
-import Image from "next/image"
+import { useAtomValue } from "jotai"
 
-import { IPersonaState, SteamPlayer } from "../lib/models/steamPlayer"
+import { IPersonaState } from "../lib/models/steamPlayer"
+import { currentPlayerAtom } from "../lib/store"
 
-interface SteamPlayerComponentProps {
-	player: SteamPlayer
-}
+export const SteamPlayerComponent: React.FC = () => {
+	const player = useAtomValue(currentPlayerAtom)
 
-export const SteamPlayerComponent: React.FC<SteamPlayerComponentProps> = ({
-	player,
-}) => {
+	if (!player) return <></>
+
 	return (
 		<div className="w-full">
-			<div className="flex items-center justify-center space-x-6 pt-6">
-				<div className="relative">
+			<div className="items-center justify-center space-y-2 pt-6 text-center md:flex md:space-y-0 md:space-x-6 md:text-left">
+				<div
+					style={{
+						width: "184px",
+						height: "184px",
+					}}
+					className="relative mx-auto md:mx-0"
+				>
 					<img
 						alt={`Player avatar for ${player.personaName}`}
 						src={player.avatarFull}
@@ -24,7 +29,7 @@ export const SteamPlayerComponent: React.FC<SteamPlayerComponentProps> = ({
 						}}
 						width={184}
 						height={184}
-						className="m-0 rounded-xl"
+						className="mx-auto my-0 rounded-xl md:m-0"
 					/>
 					<div
 						className={clsx(
@@ -52,7 +57,7 @@ export const SteamPlayerComponent: React.FC<SteamPlayerComponentProps> = ({
 					<a
 						href={`https://steamcommunity.com/profiles/${player.steamId}/`}
 						target="_blank"
-						className="mt-4 flex items-center rounded-lg bg-violet-400 px-2 py-1 text-white no-underline shadow-lg outline-none focus:ring-4 focus:ring-violet-400/50"
+						className="mx-auto mt-4 flex w-56 items-center justify-between rounded-lg bg-violet-400 px-2 py-1 text-white no-underline shadow-lg outline-none focus:ring-4 focus:ring-violet-400/50 md:mx-0"
 						rel="noreferrer"
 					>
 						Open Profile on Steam

@@ -1,89 +1,45 @@
-import { useAtomValue } from "jotai"
 import { useAtom } from "jotai"
 import { GetServerSideProps, NextPage } from "next"
 import Head from "next/head"
 import { NextSeo } from "next-seo"
-import { useEffect } from "react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
-import { CompareByFriendsComponent } from "../../components/CompareByFriendsComponent"
-import { CompareByGamesComponent } from "../../components/CompareByGamesComponent"
-import { SteamFriendsComponent } from "../../components/SteamFriendsComponent"
-import { SteamGamesComponent } from "../../components/SteamGamesComponent"
-import { SteamPlayerComponent } from "../../components/SteamPlayerComponent"
+import { ComparisonWrapper } from "../../components/comparison-wrapper"
+import { SteamPlayerComponent } from "../../components/steam-player"
 import { ISteamGame } from "../../lib/models/steamGame"
 import { ISteamPlayer, SteamPlayer } from "../../lib/models/steamPlayer"
-import {
-	friendsAtom,
-	selectedSteamGamesAtom,
-	selectedSteamPlayersAtom,
-} from "../../lib/store"
+import { currentPlayerAtom } from "../../lib/store"
 
 interface UserPageProps {
-	player: ISteamPlayer
+	playerRaw: ISteamPlayer
 }
 
-const User: NextPage<UserPageProps> = ({ player }) => {
-	const [friends, setFriends] = useAtom(friendsAtom)
-	const [user, setUser] = useState<SteamPlayer>(new SteamPlayer(player))
-	const [friendsLoaded, setFriendsLoaded] = useState(false)
-	const [gamesLoaded, setGamesLoaded] = useState(false)
-
-	const selectedPlayers = useAtomValue(selectedSteamPlayersAtom)
-	const selectedGames = useAtomValue(selectedSteamGamesAtom)
+const User: NextPage<UserPageProps> = ({ playerRaw }) => {
+	const [player, setPlayer] = useAtom(currentPlayerAtom)
 
 	useEffect(() => {
-		if (!friendsLoaded) {
-			fetch(`/api/user/${player.steamId}/friends`)
-				.then((res) => res.json())
-				.then((data: ISteamPlayer[]) => {
-					console.log(data)
-					setFriends(data.map((p) => new SteamPlayer(p)))
-					setFriendsLoaded(true)
-				})
-				.catch((err) => {
-					console.error(err)
-					setFriendsLoaded(true)
-					return null
-				})
-		}
-
-		if (!gamesLoaded) {
-			fetch(`/api/user/${player.steamId}/games`)
-				.then((res) => res.json())
-				.then((data: ISteamGame[]) => {
-					// set the users games
-					setUser((prev) => {
-						console.log(prev)
-						prev.games = data
-						return prev
-					})
-					setGamesLoaded(true)
-				})
-				.catch((err) => {
-					setGamesLoaded(true)
-					console.log(err)
-				})
-		}
+		setPlayer(new SteamPlayer(playerRaw))
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [user])
+	}, [])
+
+	if (!player) return <></>
 
 	return (
 		<div className="w-full">
 			<NextSeo
-				title={`${user.personaName} | Steam Compare Profile`}
+				title={`${player.personaName} | Steam Compare Profile`}
 				description="Select Friends or Games to compare against."
 				canonical="https://www.canonical.ie/"
 				openGraph={{
 					url: "https://www.url.ie/a",
-					title: `${user.personaName} | Steam Compare Profile`,
+					title: `${player.personaName} | Steam Compare Profile`,
 					description: "Select Friends or Games to compare against.",
 					images: [
 						{
-							url: user.avatarFull,
+							url: player.avatarFull,
 							width: 184,
 							height: 184,
-							alt: `${user.personaName} avatar`,
+							alt: `${player.personaName} avatar`,
 							type: "image/jpeg",
 						},
 					],
@@ -91,10 +47,11 @@ const User: NextPage<UserPageProps> = ({ player }) => {
 				}}
 			/>
 			<Head>
-				<title>{`${user.personaName} | Steam Compare Profile`}</title>
+				<title>{`${player.personaName} | Steam Compare Profile`}</title>
 			</Head>
-			<SteamPlayerComponent player={user} />
-			{selectedGames.length === 0 && selectedPlayers.length === 0 && (
+			<SteamPlayerComponent />
+			<ComparisonWrapper />
+			{/* {selectedGames.length === 0 && selectedPlayers.length === 0 && (
 				<div className="flex items-start p-4">
 					<SteamFriendsComponent
 						loaded={friendsLoaded}
@@ -104,12 +61,12 @@ const User: NextPage<UserPageProps> = ({ player }) => {
 					<SteamGamesComponent
 						loaded={gamesLoaded}
 						className="mx-auto w-1/2 p-2"
-						games={user.games}
+						games={player.games}
 					/>
 				</div>
 			)}
 			{selectedPlayers.length > 0 && <CompareByFriendsComponent player={user} />}
-			{selectedGames.length > 0 && <CompareByGamesComponent player={user} />}
+			{selectedGames.length > 0 && <CompareByGamesComponent player={user} />} */}
 		</div>
 	)
 }
@@ -127,9 +84,21 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 			return null
 		})
 
+	if (player) {
+		// load the games
+		await fetch(`${process.env.NEXT_PUBLIC_API_URL ?? ""}/user/${steamId}/games`)
+			.then((res) => res.json())
+			.then((data: ISteamGame[]) => {
+				player.games = data
+			})
+			.catch((err) => {
+				console.log(err)
+			})
+	}
+
 	return {
 		props: {
-			player: player as ISteamPlayer,
+			playerRaw: player as ISteamPlayer,
 		},
 	}
 }

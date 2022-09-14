@@ -23,12 +23,13 @@ const Home: NextPage = () => {
 		<div className="flex h-screen w-screen items-center justify-center">
 			<NextSeo
 				title="Steam Compare"
-				description="Select Friends or Games to compare against."
+				description="Compare your Steam Library with your friends, compare by games, or instead compare by Steam ID! Easily figure out which games that you have in common with your friends to accelerate your next gaming session!"
 				canonical="https://www.canonical.ie/"
 				openGraph={{
 					url: "https://www.url.ie/a",
 					title: "Steam Compare",
-					description: "Select Friends or Games to compare against.",
+					description:
+						"Compare your Steam Library with your friends, compare by games, or instead compare by Steam ID! Easily figure out which games that you have in common with your friends to accelerate your next gaming session!",
 					images: [
 						{
 							url: "/logo/0.25x.png",
@@ -40,6 +41,13 @@ const Home: NextPage = () => {
 					],
 					site_name: "Steam Compare",
 				}}
+				additionalMetaTags={[
+					{
+						property: "keywords",
+						content:
+							"steam, compare, library, games, friends, steamid, steam compare games, steam compare friends, steam compare library",
+					},
+				]}
 			/>
 			<Head>
 				<title>Steam Compare</title>
