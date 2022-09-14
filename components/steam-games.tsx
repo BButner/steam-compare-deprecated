@@ -98,7 +98,7 @@ export const SteamGames: React.FC = () => {
 		)
 
 	return (
-		<div className="flex flex-wrap items-center justify-center">
+		<div className="flex w-full flex-wrap items-center justify-center">
 			{gamesLoading && <LoadingBarComponent className="mt-20 w-1/2" />}
 			{!gamesLoading && (
 				<div className="flex items-start justify-center">
