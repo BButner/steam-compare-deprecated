@@ -24,6 +24,7 @@ export const SteamFriends: React.FC = () => {
 	const [selectedFriends, setSelectedFriends] = useAtom(selectedSteamPlayersAtom)
 	const [friendsGames, setFriendsGames] = useAtom(friendsGamesAtom)
 	const [filter, setFilter] = useState("")
+	const [gameFilter, setGameFilter] = useState("")
 
 	useEffect(() => {
 		if (!player) return
@@ -104,8 +105,8 @@ export const SteamFriends: React.FC = () => {
 						<input
 							type="text"
 							placeholder="Search Games..."
-							value={filter}
-							onChange={(e) => setFilter(e.target.value)}
+							value={gameFilter}
+							onChange={(e) => setGameFilter(e.target.value)}
 							className="mb-4 block h-12 w-full rounded-md py-2 px-4 shadow-none"
 						/>
 					</div>
@@ -192,36 +193,44 @@ export const SteamFriends: React.FC = () => {
 						{selectedFriends.length > 0 &&
 							friendsGames.length > 0 &&
 							!friendsGames.every((friend) => friend.games.length === 0) &&
-							commonGames.map((game: ISteamGame) => {
-								return (
-									<motion.div
-										layout
-										key={game.appid}
-										transition={{ duration: 0.2 }}
-										initial={{ y: 20, opacity: 0 }}
-										animate={{ y: 0, opacity: 1 }}
-										exit={{ y: 20, opacity: 0 }}
-										className="flex w-1/2 items-center space-x-2 p-1"
-									>
-										<img
-											alt={`Game logo for ${game.name}`}
-											width={32}
-											height={32}
-											style={{
-												minWidth: 32,
-												minHeight: 32,
-												maxWidth: 32,
-												maxHeight: 32,
-											}}
-											src={`https://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`}
-											className="m-0 overflow-hidden rounded"
-										/>
-										<div className="ml-2 space-y-1 overflow-hidden overflow-ellipsis">
-											<p className="m-0 whitespace-nowrap font-semibold">{game.name}</p>
-										</div>
-									</motion.div>
+							commonGames
+								.filter((game) =>
+									game.name
+										.toLocaleLowerCase()
+										.includes(gameFilter.toLocaleLowerCase()),
 								)
-							})}
+								.map((game: ISteamGame) => {
+									return (
+										<motion.div
+											layout
+											key={game.appid}
+											transition={{ duration: 0.2 }}
+											initial={{ y: 20, opacity: 0 }}
+											animate={{ y: 0, opacity: 1 }}
+											exit={{ y: 20, opacity: 0 }}
+											className="flex w-1/2 items-center space-x-2 p-1"
+										>
+											<img
+												alt={`Game logo for ${game.name}`}
+												width={32}
+												height={32}
+												style={{
+													minWidth: 32,
+													minHeight: 32,
+													maxWidth: 32,
+													maxHeight: 32,
+												}}
+												src={`https://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`}
+												className="m-0 overflow-hidden rounded"
+											/>
+											<div className="ml-2 space-y-1 overflow-hidden overflow-ellipsis">
+												<p className="m-0 whitespace-nowrap font-semibold">
+													{game.name}
+												</p>
+											</div>
+										</motion.div>
+									)
+								})}
 					</div>
 				</>
 			)}
