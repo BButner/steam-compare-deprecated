@@ -94,7 +94,6 @@ export const SteamFriends: React.FC = () => {
 						<button
 							onClick={() => {
 								setSelectedFriends([])
-								setFriendsGames([])
 							}}
 							className={clsx(
 								"h-12 overflow-hidden whitespace-nowrap bg-red-400 p-0 hover:bg-red-500 focus:ring-red-400/50 active:bg-red-600",

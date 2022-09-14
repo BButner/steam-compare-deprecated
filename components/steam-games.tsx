@@ -124,52 +124,56 @@ export const SteamGames: React.FC = () => {
 								Clear Games
 							</button>
 						</div>
-						{games.map((game) => {
-							return (
-								<motion.div
-									layout
-									key={game.appid}
-									transition={{ duration: 0.2 }}
-									initial={{ y: 20, opacity: 0 }}
-									animate={{ y: 0, opacity: 1 }}
-									exit={{ y: 20, opacity: 0 }}
-									className="relative flex w-full items-center space-x-2 overflow-hidden p-1 md:w-1/2"
-								>
-									<Switch
-										checked={selectedGames.includes(game)}
-										onChange={() => handleGamesSelection(game)}
-										className={`${
-											selectedGames.includes(game) ? "bg-violet-400" : "bg-gray-400"
-										} relative m-0 inline-flex h-4 w-8 min-w-[32px] items-center rounded p-0`}
+						{games
+							.filter((game) => game.name.toLowerCase().includes(filter.toLowerCase()))
+							.map((game) => {
+								return (
+									<motion.div
+										layout
+										key={game.appid}
+										transition={{ duration: 0.2 }}
+										initial={{ y: 20, opacity: 0 }}
+										animate={{ y: 0, opacity: 1 }}
+										exit={{ y: 20, opacity: 0 }}
+										className="relative flex w-full items-center space-x-2 overflow-hidden p-1 md:w-1/2"
 									>
-										<span className="sr-only">Enable notifications</span>
-										<span
+										<Switch
+											checked={selectedGames.includes(game)}
+											onChange={() => handleGamesSelection(game)}
 											className={`${
-												selectedGames.includes(game) ? "translate-x-4" : "translate-x-1"
-											} inline-block h-2 w-3 transform rounded-sm bg-white transition dark:bg-gray-900`}
+												selectedGames.includes(game) ? "bg-violet-400" : "bg-gray-400"
+											} relative m-0 inline-flex h-4 w-8 min-w-[32px] items-center rounded p-0`}
+										>
+											<span className="sr-only">Enable notifications</span>
+											<span
+												className={`${
+													selectedGames.includes(game)
+														? "translate-x-4"
+														: "translate-x-1"
+												} inline-block h-2 w-3 transform rounded-sm bg-white transition dark:bg-gray-900`}
+											/>
+										</Switch>
+										<img
+											alt={`Game logo for ${game.name}`}
+											width={32}
+											height={32}
+											style={{
+												minHeight: 32,
+												minWidth: 32,
+												maxWidth: "32px",
+												maxHeight: "32px",
+											}}
+											src={`https://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`}
+											className="m-0 overflow-hidden rounded"
 										/>
-									</Switch>
-									<img
-										alt={`Game logo for ${game.name}`}
-										width={32}
-										height={32}
-										style={{
-											minHeight: 32,
-											minWidth: 32,
-											maxWidth: "32px",
-											maxHeight: "32px",
-										}}
-										src={`https://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`}
-										className="m-0 overflow-hidden rounded"
-									/>
-									<div className="ml-2 space-y-1 overflow-hidden overflow-ellipsis whitespace-nowrap">
-										<p className="m-0 overflow-hidden overflow-ellipsis whitespace-nowrap font-semibold">
-											{game.name}
-										</p>
-									</div>
-								</motion.div>
-							)
-						})}
+										<div className="ml-2 space-y-1 overflow-hidden overflow-ellipsis whitespace-nowrap">
+											<p className="m-0 overflow-hidden overflow-ellipsis whitespace-nowrap font-semibold">
+												{game.name}
+											</p>
+										</div>
+									</motion.div>
+								)
+							})}
 					</div>
 					<div className="relative flex w-1/2 flex-wrap p-2">
 						{selectedGames.length === 0 && (
@@ -187,35 +191,39 @@ export const SteamGames: React.FC = () => {
 							/>
 						</div>
 						{selectedGames.length > 0 &&
-							commonFriends.map((friend) => {
-								return (
-									<motion.div
-										layout
-										key={friend.steamId}
-										transition={{ duration: 0.2 }}
-										initial={{ y: 20, opacity: 0 }}
-										animate={{ y: 0, opacity: 1 }}
-										exit={{ y: 20, opacity: 0 }}
-										className="relative flex w-full items-center space-x-2 p-1 md:w-1/2 xl:w-1/3"
-									>
-										<img
-											alt={`User avatar for ${friend.personaName}`}
-											width={32}
-											height={32}
-											style={{
-												maxWidth: 32,
-												maxHeight: 32,
-											}}
-											src={friend.avatar}
-											className="m-0 overflow-hidden rounded-lg"
-										/>
-										<div className="space-y-1">
-											<p className="m-0 font-semibold">{friend.personaName}</p>
-											<i className="text-sm">{friend.steamId}</i>
-										</div>
-									</motion.div>
+							commonFriends
+								.filter((friend) =>
+									friend.personaName.toLowerCase().includes(friendFilter.toLowerCase()),
 								)
-							})}
+								.map((friend) => {
+									return (
+										<motion.div
+											layout
+											key={friend.steamId}
+											transition={{ duration: 0.2 }}
+											initial={{ y: 20, opacity: 0 }}
+											animate={{ y: 0, opacity: 1 }}
+											exit={{ y: 20, opacity: 0 }}
+											className="relative flex w-full items-center space-x-2 p-1 md:w-1/2 xl:w-1/3"
+										>
+											<img
+												alt={`User avatar for ${friend.personaName}`}
+												width={32}
+												height={32}
+												style={{
+													maxWidth: 32,
+													maxHeight: 32,
+												}}
+												src={friend.avatar}
+												className="m-0 overflow-hidden rounded-lg"
+											/>
+											<div className="space-y-1">
+												<p className="m-0 font-semibold">{friend.personaName}</p>
+												<i className="text-sm">{friend.steamId}</i>
+											</div>
+										</motion.div>
+									)
+								})}
 					</div>
 				</div>
 			)}
