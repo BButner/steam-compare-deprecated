@@ -24,7 +24,7 @@ export const ComparisonSelector: React.FC<ComparisonSelectorProps> = ({
 	const modes: SelectionModeArray[] = [
 		{ mode: SelectionMode.FRIENDS, name: "Friends" },
 		{ mode: SelectionMode.GAMES, name: "Games" },
-		{ mode: SelectionMode.STEAMIDS, name: "SteamIDs" },
+		// { mode: SelectionMode.STEAMIDS, name: "SteamIDs" },
 	]
 
 	return (

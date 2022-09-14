@@ -54,7 +54,11 @@ export const SteamFriends: React.FC = () => {
 
 	const commonGames = player.games.filter((game) => {
 		return friendsGames
-			.filter((friendGameEntry) => !hasInvalidGames(friendGameEntry.steamId))
+			.filter(
+				(friendGameEntry) =>
+					!hasInvalidGames(friendGameEntry.steamId) &&
+					selectedFriends.find((friend) => friend.steamId === friendGameEntry.steamId),
+			)
 			.every((friendGame) =>
 				friendGame.games.some((friendGame) => friendGame.appid === game.appid),
 			)
@@ -63,7 +67,6 @@ export const SteamFriends: React.FC = () => {
 	const handleFriendSelection = (friend: SteamPlayer) => {
 		if (selectedFriends.includes(friend)) {
 			setSelectedFriends(selectedFriends.filter((f) => f.steamId !== friend.steamId))
-			setFriendsGames(friendsGames.filter((fg) => fg.steamId !== friend.steamId))
 		} else {
 			setSelectedFriends([...selectedFriends, friend])
 
