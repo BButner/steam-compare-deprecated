@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 
 import { ComparisonWrapper } from "../../components/comparison-wrapper"
 import { SteamPlayerComponent } from "../../components/steam-player"
+import { ISteamGame } from "../../lib/models/steamGame"
 import { ISteamPlayer, SteamPlayer } from "../../lib/models/steamPlayer"
 import { currentPlayerAtom } from "../../lib/store"
 
@@ -82,6 +83,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 			console.log(err)
 			return null
 		})
+
+	if (player) {
+		// load the games
+		await fetch(`${process.env.NEXT_PUBLIC_API_URL ?? ""}/user/${steamId}/games`)
+			.then((res) => res.json())
+			.then((data: ISteamGame[]) => {
+				player.games = data
+			})
+			.catch((err) => {
+				console.log(err)
+			})
+	}
 
 	return {
 		props: {
