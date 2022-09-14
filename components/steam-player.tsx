@@ -1,9 +1,8 @@
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid"
 import clsx from "clsx"
 import { useAtomValue } from "jotai"
-import Image from "next/image"
 
-import { IPersonaState, SteamPlayer } from "../lib/models/steamPlayer"
+import { IPersonaState } from "../lib/models/steamPlayer"
 import { currentPlayerAtom } from "../lib/store"
 
 export const SteamPlayerComponent: React.FC = () => {

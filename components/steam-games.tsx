@@ -2,7 +2,6 @@ import { motion } from "framer-motion"
 import { useAtom, useAtomValue } from "jotai"
 import { useEffect, useState } from "react"
 
-import { loadFriends } from "../lib/friends"
 import { loadGames } from "../lib/games"
 import { currentPlayerAtom, gamesAtom } from "../lib/store"
 

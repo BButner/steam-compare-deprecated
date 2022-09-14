@@ -1,7 +1,7 @@
 import { Switch } from "@headlessui/react"
 import { XCircleIcon } from "@heroicons/react/24/solid"
 import clsx from "clsx"
-import { AnimatePresence, motion } from "framer-motion"
+import { motion } from "framer-motion"
 import { useAtom, useAtomValue } from "jotai"
 import { useEffect, useState } from "react"
 
