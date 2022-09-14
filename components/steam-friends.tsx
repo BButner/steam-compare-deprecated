@@ -38,8 +38,6 @@ export const SteamFriends: React.FC = () => {
 			setFriendsLoading(false)
 		}
 
-		console.log(commonGames)
-
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [player, selectedFriends])
 
