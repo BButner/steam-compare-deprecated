@@ -101,7 +101,7 @@ export const SteamGames: React.FC = () => {
 		<div className="flex w-full flex-wrap items-center justify-center">
 			{gamesLoading && <LoadingBarComponent className="mt-20 w-1/2" />}
 			{!gamesLoading && (
-				<div className="flex items-start justify-center">
+				<div className="flex w-full items-start justify-center">
 					<div className="flex w-1/2 flex-wrap p-2">
 						<div className="flex w-full px-2">
 							<input
