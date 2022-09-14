@@ -128,12 +128,12 @@ export const SteamFriends: React.FC = () => {
 										initial={{ y: 20, opacity: 0 }}
 										animate={{ y: 0, opacity: 1 }}
 										exit={{ y: 20, opacity: 0 }}
-										className="relative flex w-1/2 items-center space-x-2 p-1 lg:w-1/3"
+										className="relative flex w-full items-center space-x-2 p-1 md:w-1/2 xl:w-1/3"
 									>
 										<div
 											className={clsx(
 												"flex items-center space-x-2",
-												hasInvalidGames(friend.steamId) ? "opacity-50" : "",
+												hasInvalidGames(friend.steamId) ? "opacity-40" : "",
 											)}
 										>
 											<Switch
@@ -175,7 +175,7 @@ export const SteamFriends: React.FC = () => {
 												onClick={() =>
 													alert("Could not load games due to a private profile...")
 												}
-												className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-transparent hover:scale-105 hover:bg-transparent focus:ring-0 active:scale-95 active:bg-transparent"
+												className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-transparent shadow-none hover:scale-105 hover:bg-transparent focus:ring-0 active:scale-95 active:bg-transparent"
 											>
 												<XCircleIcon className="h-10 w-10 text-red-400" />
 											</button>
