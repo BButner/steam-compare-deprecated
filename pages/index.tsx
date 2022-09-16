@@ -51,14 +51,6 @@ const Home: NextPage = () => {
 			/>
 			<Head>
 				<title>Steam Compare</title>
-				<meta
-					name="description"
-					content="Compare your Steam Library with your friends, compare by games, or instead compare by Steam ID! Easily figure out which games that you have in common with your friends to accelerate your next gaming session!"
-				/>
-				<meta
-					name="keywords"
-					content="steam, compare, library, games, friends, steamid, steam compare games, steam compare friends, steam compare library"
-				/>
 			</Head>
 
 			<main className="w-full bg-transparent text-center">
