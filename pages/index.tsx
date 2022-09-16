@@ -51,24 +51,44 @@ const Home: NextPage = () => {
 			/>
 			<Head>
 				<title>Steam Compare</title>
+				<meta
+					name="description"
+					content="Compare your Steam Library with your friends, compare by games, or instead compare by Steam ID! Easily figure out which games that you have in common with your friends to accelerate your next gaming session!"
+				/>
+				<meta
+					name="keywords"
+					content="steam, compare, library, games, friends, steamid, steam compare games, steam compare friends, steam compare library"
+				/>
 			</Head>
 
-			<main className="w-3/4 bg-transparent md:w-2/3 lg:w-1/2 xl:w-1/3">
+			<main className="w-full bg-transparent text-center">
 				<div className="w-full space-y-2">
-					<LogoSvg width={200} height={200} className="m-auto mb-32" />
-					<h2>Enter your SteamID</h2>
-					<div className="flex w-full rounded shadow-lg">
-						<form onSubmit={(e) => handleSteamId(e)} className="flex w-full">
-							<input
-								value={steamId}
-								onChange={(e) => setSteamId(e.target.value)}
-								className="w-full rounded-l rounded-r-none border-t-4 border-l-4 border-b-4 border-r-0 border-violet-400 p-4 text-2xl"
-								type="text"
-							/>
-							<button className="h-full rounded-l-none rounded-r bg-violet-400 px-6 outline-none duration-200 hover:bg-violet-500 focus:ring-4 focus:ring-violet-500/50 active:bg-violet-600">
-								<ChevronRightIcon className="h-8 w-8 text-white" />
-							</button>
-						</form>
+					<div className="mb-32 w-full">
+						<LogoSvg width={200} height={200} className="m-auto mb-6" />
+						<h1 className="w-full bg-gradient-to-r from-sky-400 to-violet-400 bg-clip-text text-6xl font-extrabold text-transparent">
+							Steam Compare
+						</h1>
+						<h2 className="mx-auto w-3/4 text-center italic opacity-80">
+							Compare your Steam Library with your friends, compare by games, or instead
+							compare by Steam ID! Easily figure out which games that you have in common
+							with your friends to accelerate your next gaming session!
+						</h2>
+					</div>
+					<div className="mx-auto w-3/4 text-left md:w-2/3 lg:w-1/2 xl:w-1/3">
+						<h3>Enter your SteamID</h3>
+						<div className="mx-auto flex rounded shadow-lg">
+							<form onSubmit={(e) => handleSteamId(e)} className="flex w-full">
+								<input
+									value={steamId}
+									onChange={(e) => setSteamId(e.target.value)}
+									className="w-full rounded-l rounded-r-none border-t-4 border-l-4 border-b-4 border-r-0 border-violet-400 p-4 text-2xl"
+									type="text"
+								/>
+								<button className="h-full rounded-l-none rounded-r bg-violet-400 px-6 outline-none duration-200 hover:bg-violet-500 focus:ring-4 focus:ring-violet-500/50 active:bg-violet-600">
+									<ChevronRightIcon className="h-8 w-8 text-white" />
+								</button>
+							</form>
+						</div>
 					</div>
 				</div>
 			</main>
