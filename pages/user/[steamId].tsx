@@ -86,7 +86,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 	if (player) {
 		// load the games
-		await fetch(`${process.env.NEXT_PUBLIC_API_URL ?? ""}/user/${steamId}/games`)
+		await fetch(`${process.env.NEXT_PUBLIC_API_URL ?? ""}/user/${player.steamId}/games`)
 			.then((res) => res.json())
 			.then((data: ISteamGame[]) => {
 				player.games = data

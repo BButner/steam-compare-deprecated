@@ -75,6 +75,7 @@ const Home: NextPage = () => {
 									onChange={(e) => setSteamId(e.target.value)}
 									className="w-full rounded-l rounded-r-none border-t-4 border-l-4 border-b-4 border-r-0 border-violet-400 p-4 text-2xl"
 									type="text"
+									id="steamId"
 								/>
 								<button className="h-full rounded-l-none rounded-r bg-violet-400 px-6 outline-none duration-200 hover:bg-violet-500 focus:ring-4 focus:ring-violet-500/50 active:bg-violet-600">
 									<ChevronRightIcon className="h-8 w-8 text-white" />
