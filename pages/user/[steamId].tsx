@@ -22,24 +22,22 @@ const User: NextPage<UserPageProps> = ({ playerRaw }) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
-	if (!player) return <></>
-
 	return (
 		<div className="w-full">
 			<NextSeo
-				title={`${player.personaName} | Steam Compare Profile`}
+				title={`${playerRaw.personaName} | Steam Compare Profile`}
 				description="Select Friends or Games to compare against."
 				canonical="https://www.canonical.ie/"
 				openGraph={{
 					url: "https://www.url.ie/a",
-					title: `${player.personaName} | Steam Compare Profile`,
+					title: `${playerRaw.personaName} | Steam Compare Profile`,
 					description: "Select Friends or Games to compare against.",
 					images: [
 						{
-							url: player.avatarFull,
+							url: playerRaw.avatarFull,
 							width: 184,
 							height: 184,
-							alt: `${player.personaName} avatar`,
+							alt: `${playerRaw.personaName} avatar`,
 							type: "image/jpeg",
 						},
 					],
@@ -47,26 +45,10 @@ const User: NextPage<UserPageProps> = ({ playerRaw }) => {
 				}}
 			/>
 			<Head>
-				<title>{`${player.personaName} | Steam Compare Profile`}</title>
+				<title>{`${playerRaw.personaName} | Steam Compare Profile`}</title>
 			</Head>
 			<SteamPlayerComponent />
 			<ComparisonWrapper />
-			{/* {selectedGames.length === 0 && selectedPlayers.length === 0 && (
-				<div className="flex items-start p-4">
-					<SteamFriendsComponent
-						loaded={friendsLoaded}
-						friends={friends}
-						className="mx-auto w-1/2 p-2"
-					/>
-					<SteamGamesComponent
-						loaded={gamesLoaded}
-						className="mx-auto w-1/2 p-2"
-						games={player.games}
-					/>
-				</div>
-			)}
-			{selectedPlayers.length > 0 && <CompareByFriendsComponent player={user} />}
-			{selectedGames.length > 0 && <CompareByGamesComponent player={user} />} */}
 		</div>
 	)
 }
