@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 
 import { ComparisonWrapper } from "../../components/comparison-wrapper"
 import { SteamPlayerComponent } from "../../components/steam-player"
+import { savePlayerToLocalCache } from "../../lib/localCache"
 import { ISteamGame } from "../../lib/models/steamGame"
 import { ISteamPlayer, SteamPlayer } from "../../lib/models/steamPlayer"
 import { currentPlayerAtom } from "../../lib/store"
@@ -19,6 +20,8 @@ const User: NextPage<UserPageProps> = ({ playerRaw }) => {
 
 	useEffect(() => {
 		setPlayer(new SteamPlayer(playerRaw))
+
+		savePlayerToLocalCache(playerRaw)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
@@ -65,6 +68,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 			console.log(err)
 			return null
 		})
+
+	console.log(player)
 
 	if (player) {
 		// load the games
