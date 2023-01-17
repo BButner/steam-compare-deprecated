@@ -15,6 +15,6 @@ Have you ever wanted to quickly and easily check which games you and your friend
 - [x] Quickly load your games, and the games of your friends
 - [x] Compare by Games
 - [x] Compare by Friends
-- [ ] Support for Vanity URL's
+- [x] Support for Vanity URL's
 - [ ] Compare across Steam ID's
 - [x] Easy to use interface
