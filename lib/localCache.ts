@@ -21,5 +21,12 @@ export const savePlayerToLocalCache = (player: ISteamPlayer) => {
 }
 
 export const getPlayersFromLocalCache = (): ICachedPlayer[] => {
-	return JSON.parse(localStorage.getItem("players") || "[]") as ICachedPlayer[]
+	let players = JSON.parse(localStorage.getItem("players") || "[]") as ICachedPlayer[]
+
+	// check players for any that are no longer valid
+	players = players.filter(
+		(p) => p.steamId !== undefined && p.personaName !== undefined,
+	)
+
+	return players
 }
