@@ -19,6 +19,8 @@ const User: NextPage<UserPageProps> = ({ playerRaw }) => {
 	const [player, setPlayer] = useAtom(currentPlayerAtom)
 
 	useEffect(() => {
+		console.log("playerRaw:", playerRaw)
+
 		setPlayer(new SteamPlayer(playerRaw))
 
 		savePlayerToLocalCache(playerRaw)
@@ -62,14 +64,23 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	const player: ISteamPlayer | null = await fetch(
 		`${process.env.NEXT_PUBLIC_API_URL ?? ""}/user/${steamId}`,
 	)
-		.then((res) => res.json())
+		.then((res) => {
+			if (res.status === 404) {
+				return null
+			}
+			return res.json()
+		})
 		.then((data) => data as ISteamPlayer)
 		.catch((err) => {
 			console.log(err)
 			return null
 		})
 
-	console.log(player)
+	if (player === null) {
+		return {
+			notFound: true,
+		}
+	}
 
 	if (player) {
 		// load the games
@@ -85,7 +96,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 	return {
 		props: {
-			playerRaw: player as ISteamPlayer,
+			playerRaw: player,
 		},
 	}
 }

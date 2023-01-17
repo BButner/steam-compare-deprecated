@@ -6,6 +6,8 @@ export interface ICachedPlayer {
 }
 
 export const savePlayerToLocalCache = (player: ISteamPlayer) => {
+	console.log("Saving player to local cache", player)
+
 	const players: ICachedPlayer[] = JSON.parse(
 		localStorage.getItem("players") || "[]",
 	) as ICachedPlayer[]
