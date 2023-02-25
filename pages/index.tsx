@@ -1,48 +1,55 @@
-import { Combobox } from "@headlessui/react"
-import { CheckIcon, ChevronRightIcon } from "@heroicons/react/24/solid"
+import ChevronRightIcon from "@heroicons/react/24/solid/ChevronRightIcon"
+import { AnimatePresence, motion } from "framer-motion"
 import type { NextPage } from "next"
 import Head from "next/head"
-import Image from "next/image"
 import { useRouter } from "next/router"
 import { NextSeo } from "next-seo"
-import { FormEvent, useEffect, useState } from "react"
+import { FormEvent, useState } from "react"
 
-import { getPlayersFromLocalCache, ICachedPlayer } from "../lib/localCache"
-import Logo from "../resources/logo.svg"
+import { LoadingBarComponent } from "../components/LoadingBarComponent"
+import { ISteamPlayer } from "../lib/models/steamPlayer"
 import { LogoSvg } from "../resources/LogoSvg"
 
 const Home: NextPage = () => {
 	const [steamId, setSteamId] = useState<string>("")
 	const router = useRouter()
-	const [selectedCachedPlayer, setSelectedCachedPlayer] =
-		useState<ICachedPlayer | null>(null)
-	const [cachedPlayers, setCachedPlayers] = useState<ICachedPlayer[]>([])
-	const [query, setQuery] = useState<string>("")
+	const [loading, setLoading] = useState<boolean>(false)
+	const [playerNotFound, setPlayerNotFound] = useState<boolean>(false)
 
-	const handleSteamId = (e: FormEvent<HTMLFormElement>) => {
+	const handleSteamId = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
+		setLoading(true)
 
-		void router.push(`/user/${steamId}`)
-	}
+		const player: ISteamPlayer | null = await fetch(
+			`${process.env.NEXT_PUBLIC_API_URL ?? ""}/user/${steamId}`,
+		)
+			.then((res) => {
+				if (res.status === 404) {
+					return null
+				}
+				return res.json()
+			})
+			.then((data) => {
+				if (data === null) {
+					return null
+				}
+				const player = data as ISteamPlayer
 
-	const getFilteredCachedPlayers = () => {
-		if (query.length === 0) {
-			return cachedPlayers
+				return player
+			})
+			.catch((err) => {
+				console.log(err)
+				return null
+			})
+
+		if (player === null) {
+			setPlayerNotFound(true)
+			setLoading(false)
+			return
 		}
 
-		// filter cachedPlayers by steamId or personaName with query string all lowercase
-		return cachedPlayers.filter(
-			(player) =>
-				player.steamId.toLowerCase().includes(query.toLowerCase()) ||
-				player.personaName.toLowerCase().includes(query.toLowerCase()),
-		)
+		void router.push(`/user/${player.steamId}`)
 	}
-
-	useEffect(() => {
-		const players = getPlayersFromLocalCache()
-
-		setCachedPlayers(players)
-	}, [])
 
 	return (
 		<div className="flex h-screen w-screen items-center justify-center">
@@ -94,73 +101,38 @@ const Home: NextPage = () => {
 					<div className="mx-auto w-3/4 text-left md:w-2/3 lg:w-1/2 xl:w-1/3">
 						<h3>Enter your SteamID</h3>
 						<div className="mx-auto flex rounded shadow-lg">
-							<form onSubmit={(e) => handleSteamId(e)} className="flex w-full">
-								{/* <input
+							<form onSubmit={(e) => void handleSteamId(e)} className="flex w-full">
+								<input
 									value={steamId}
 									onChange={(e) => setSteamId(e.target.value)}
 									className="w-full rounded-l rounded-r-none border-t-4 border-l-4 border-b-4 border-r-0 border-violet-400 p-4 text-2xl"
 									type="text"
 									id="steamId"
-								/> */}
-								<Combobox value={steamId} onChange={setSteamId} nullable>
-									<div className="relative w-full">
-										<Combobox.Input
-											className="w-full rounded-l rounded-r-none border-t-4 border-l-4 border-b-4 border-r-0 border-violet-400 p-4 text-2xl"
-											onChange={(event) => setQuery(event.target.value)}
-										/>
-										<Combobox.Options className="absolute bottom-full mb-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-											{getFilteredCachedPlayers().length === 0 && query !== "" ? (
-												<Combobox.Option
-													className="relative cursor-default select-none py-2 px-4 text-gray-700"
-													value={query}
-												>
-													Show Player{" "}
-													<span className="font-semibold text-violet-400">{query}</span>
-												</Combobox.Option>
-											) : (
-												getFilteredCachedPlayers().map((player) => (
-													<Combobox.Option
-														key={player.steamId}
-														className={({ active }) =>
-															`relative cursor-default select-none py-2 pl-10 pr-4 ${
-																active ? "bg-violet-400 text-white" : "text-gray-900"
-															}`
-														}
-														value={player.steamId}
-													>
-														{({ selected, active }) => (
-															<>
-																<span
-																	className={`block truncate ${
-																		selected ? "font-medium" : "font-normal"
-																	}`}
-																>
-																	{player.personaName}
-																</span>
-																{selected ? (
-																	<span
-																		className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-																			active ? "text-white" : "text-violet-400"
-																		}`}
-																	>
-																		<CheckIcon className="h-5 w-5" aria-hidden="true" />
-																	</span>
-																) : null}
-															</>
-														)}
-													</Combobox.Option>
-												))
-											)}
-										</Combobox.Options>
-									</div>
-								</Combobox>
+								/>
 								<button className="h-full rounded-l-none rounded-r bg-violet-400 px-6 outline-none duration-200 hover:bg-violet-500 focus:ring-4 focus:ring-violet-500/50 active:bg-violet-600">
 									<ChevronRightIcon className="h-8 w-8 text-white" />
 								</button>
 							</form>
 						</div>
+
+						{playerNotFound && (
+							<p className="font-semibold text-red-500">Player not found, try again!</p>
+						)}
 					</div>
 				</div>
+
+				<AnimatePresence>
+					{loading && (
+						<motion.div
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							exit={{ opacity: 0 }}
+							className="fixed top-0 left-0 flex h-screen w-screen items-center justify-center bg-gray-100/80 dark:bg-slate-900/80"
+						>
+							<LoadingBarComponent className="w-1/2" />
+						</motion.div>
+					)}
+				</AnimatePresence>
 			</main>
 		</div>
 	)

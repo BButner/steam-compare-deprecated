@@ -2,11 +2,10 @@ import { useAtom } from "jotai"
 import { GetServerSideProps, NextPage } from "next"
 import Head from "next/head"
 import { NextSeo } from "next-seo"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 
 import { ComparisonWrapper } from "../../components/comparison-wrapper"
 import { SteamPlayerComponent } from "../../components/steam-player"
-import { savePlayerToLocalCache } from "../../lib/localCache"
 import { ISteamGame } from "../../lib/models/steamGame"
 import { ISteamPlayer, SteamPlayer } from "../../lib/models/steamPlayer"
 import { currentPlayerAtom } from "../../lib/store"
@@ -19,11 +18,8 @@ const User: NextPage<UserPageProps> = ({ playerRaw }) => {
 	const [player, setPlayer] = useAtom(currentPlayerAtom)
 
 	useEffect(() => {
-		console.log("playerRaw:", playerRaw)
-
 		setPlayer(new SteamPlayer(playerRaw))
 
-		savePlayerToLocalCache(playerRaw)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
