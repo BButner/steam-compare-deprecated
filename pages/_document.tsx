@@ -19,6 +19,7 @@ class MyDocument extends Document {
 			<Html>
 				<Head>
 					<link rel="shortcut icon" href="/logo/0.25x.png" />
+					<script defer data-domain="steamcompare.games" src="https://plausible.io/js/script.js"></script>
 				</Head>
 				<body className="prose max-w-full dark:prose-invert">
 					<Main />
